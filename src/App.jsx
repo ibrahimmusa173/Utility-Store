@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './Pages/Home';
 import Getdata from './Pages/Getdata';
 import Putdata from './Pages/Putdata';
+import UpdateUser from './Pages/UpdateUser';
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
               <Route path="/getdata" element={<Getdata/>}/>
               <Route path="/putdata" element={<Putdata/>}/>
               <Route path="/putdata/:id" element={<Putdata/>} />
+               <Route path="/UpdateUser/:id" element={<UpdateUser/>} />
 
 
 
