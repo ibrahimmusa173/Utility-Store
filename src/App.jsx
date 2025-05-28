@@ -18,6 +18,7 @@ function App() {
 
               <Route path="/getdata" element={<Getdata/>}/>
               <Route path="/putdata" element={<Putdata/>}/>
+              <Route path="/putdata/:id" element={<Putdata/>} />
 
 
 

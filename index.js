@@ -9,7 +9,7 @@ const port = 7000;
 app.use(bodyParser.json());
 app.use(cors({
     origin: "http://localhost:3000", // Allow requests from frontend
-    methods: ["GET", "POST"], // Allow specific methods
+    methods: ["GET", "POST",'PUT', 'DELETE'], // Allow specific methods
     credentials: true // If you need to send cookies or auth headers
 }));
 
