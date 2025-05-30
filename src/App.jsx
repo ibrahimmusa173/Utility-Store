@@ -5,15 +5,16 @@ import Putdata from './Pages/Putdata';
 import UpdateUser from './Pages/UpdateUser';
 
 
-import UtilityStore from '././Pages/UtilityStore/UtilityStore';
+ import UtilityStore from './Pages/UtilityStore/UtilityStore';
+ import Team from './Pages/Team/Team';
+// import Products from './Pages/Products/Products';
+// import Signin from './Pages/Signin/Signin';
 
 function App() {
 
   return (
     <>
-      <h1
-        className="text-3xl text-center text-red-700"
-      >Welcome to Vite with TailwindCSS and React</h1>
+   
       
             <Routes>
 
@@ -21,6 +22,9 @@ function App() {
               <Route path="/home" element={<Home/>}/> */}
 
                 <Route path="/" element={<UtilityStore/>}/>
+                 <Route path="/Team" element={<Team/>}/>
+                  {/* <Route path="/Products" element={<Products/>}/>
+                   <Route path="/Signin" element={<Signin/>}/>  */}
 
               <Route path="/getdata" element={<Getdata/>}/>
               <Route path="/putdata" element={<Putdata/>}/>
