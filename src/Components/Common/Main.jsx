@@ -60,11 +60,6 @@ function Main(){
 
 
 
-
-
-
-
-
              <div className="flex items-center justify-center">
 
                 <div className=" sm:w-[70%]  sm:flex items-center justify-center">

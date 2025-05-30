@@ -1,13 +1,9 @@
-
-function Main1(){
+function Team(){
     return(
-
+        
         <div>
             
-    
-                
-
-        <div className="flex items-center justify-center mt-8 pt-8">
+                  <div className="flex items-center justify-center mt-8 pt-8">
             <div className="text-[45px] m-4 w-[70%] h-[160px] border-4 rounded-xl border-amber-500  flex flex-col justify-center items-center text-shadow-blue"> 
             Utility Stores Corporation Leadership
             </div></div>
@@ -54,10 +50,9 @@ function Main1(){
         
 
 
-    
         
         </div>
     )
 }
 
-export default Main1
+export default Team
