@@ -1,8 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from './Pages/Home';
+// import Home from './Pages/Home';
 import Getdata from './Pages/Getdata';
 import Putdata from './Pages/Putdata';
 import UpdateUser from './Pages/UpdateUser';
+
+
+import UtilityStore from '././Pages/UtilityStore/UtilityStore';
 
 function App() {
 
@@ -14,13 +17,18 @@ function App() {
       
             <Routes>
 
-              <Route path="/" element={<Home/>}/>
-              <Route path="/home" element={<Home/>}/>
+              {/* <Route path="/" element={<Home/>}/>
+              <Route path="/home" element={<Home/>}/> */}
+
+                <Route path="/" element={<UtilityStore/>}/>
 
               <Route path="/getdata" element={<Getdata/>}/>
               <Route path="/putdata" element={<Putdata/>}/>
               <Route path="/putdata/:id" element={<Putdata/>} />
                <Route path="/UpdateUser/:id" element={<UpdateUser/>} />
+
+
+
 
 
 
