@@ -20,7 +20,7 @@ function Header(){
                 
 
 
-                <div className=" h-24 w-64 flex items-center justify-center  shadow-sm mb-3 shadow-indigo-300 hover:border-4 border-amber-500 duration-200  "><img src="img/utility_store.jpg" alt="" /></div>
+                <div className=" h-24 w-64 flex items-center justify-center  shadow-sm mb-3 shadow-indigo-300 hover:border-4 border-amber-500 duration-200  "><img src="images/Header/utility_store.jpg" alt="" /></div>
                 <div className="hidden sm:block h-24 w-66 flex items-center justify-center ml-4 pt-8"> <i className="fa-solid fa-phone mr-2"></i> For Complains: 0800-05599</div>
             </div>
 
@@ -37,7 +37,7 @@ function Header(){
                        
             <div className=" my-4 flex items-center justify-center ">
                     <div className="grid grid-cols-2 sm:grid-cols-4 ">
-                <a className="flex items-center justify-center m-2 p-3 sm:mr-4 sm:ml-2 bg-amber-500 font-semibold rounded-md hover:bg-yellow-300 duration-300 hover:scale-105" href="About">About</a>
+                <a className="flex items-center justify-center m-2 p-3 sm:mr-4 sm:ml-2 bg-amber-500 font-semibold rounded-md hover:bg-yellow-300 duration-300 hover:scale-105" href="/UtilityStore">About</a>
                 <a className="flex items-center justify-center m-2 p-3 sm:mr-4 bg-amber-500 font-semibold rounded-md hover:bg-yellow-300 duration-300 hover:scale-105 " href="/Team">Team</a>
                 <a className="flex items-center justify-center m-2 p-3 sm:mr-4 bg-amber-500 font-semibold rounded-md hover:bg-yellow-300 duration-300 hover:scale-105" href="Products">Products</a>
                 <a className="flex items-center justify-center m-2 p-3 sm:mr-4 bg-amber-500 font-semibold rounded-md hover:bg-yellow-300 duration-300 hover:scale-105" href="Signin">Sign in</a>

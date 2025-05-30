@@ -1,5 +1,5 @@
 import Header from '../../Components/Header/Header'
-// import Main1 from './Main1'
+import Main1 from './Main1'
 import Slider from '../../Components/Common/Slider'
 import Footer from '../../Components/Footer/Footer'
 
@@ -12,7 +12,7 @@ function Team(){
 
         <Slider/>
                 
-        {/* <Main1/> */}
+        <Main1/>
 
 
         <Footer/>

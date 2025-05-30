@@ -4,9 +4,9 @@ import { useState, useEffect, useCallback } from 'react';
 export default function ImageSlider() {
   // Array of image paths
   const images = [
-    'img/banner_1.png',
-    'img/banner_2.png',
-    'img/banner_3.png'
+    'images/Slider/banner_1.png',
+    'images/Slider/banner_2.png',
+    'images/Slider/banner_3.png'
   ];
 
   // State to track current image index
