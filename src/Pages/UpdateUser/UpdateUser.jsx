@@ -52,7 +52,7 @@ function UpdateUser() {
 
       if (response.status === 200) {
         alert("User updated successfully");
-        navigate('/getdata'); // Navigate back to user list
+        navigate('/Products'); // Navigate back to user list
       }
     } catch (error) {
       console.error("Error updating user:", error);
@@ -69,7 +69,7 @@ function UpdateUser() {
     <div className="p-4">
       <Link 
         className="font-bold text-3xl border border-black bg-yellow-400 p-2 mb-4 inline-block" 
-        to="/getdata"
+        to="/Products"
       >
         Back to Users
       </Link>
@@ -107,7 +107,7 @@ function UpdateUser() {
             {loading ? "Updating..." : "Update User"}
           </button>
           <button 
-            onClick={() => navigate('/getdata')}
+            onClick={() => navigate('/Products')}
             className="bg-gray-500 text-white px-4 py-2 rounded"
           >
             Cancel

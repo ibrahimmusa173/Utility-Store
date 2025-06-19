@@ -15,8 +15,8 @@ export default function Products() {
   const getUsersData = async () => {
     try {
       const url = "http://localhost:7000/api/user";
-      const response = await fetch(url);
-      const data = await response.json();
+      const response = await axios.get(url);
+      const data = response.data;
       console.log(data);
       setUserData(data);
       setLoading(false);
