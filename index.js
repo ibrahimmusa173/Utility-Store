@@ -21,11 +21,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const RouterPath = require("./router"); // Make sure this path points to your router file
 
-const app= express();
+const app = express();
+const port = 7000;
 
-const port= 7000;
-
-app.use(bodyParser.json());
 app.use(cors());
-app.listen(port, ()=>console.log("server running"));
+app.use(bodyParser.json());
+
+// A single, clean prefix for all API routes
+app.use("/api", RouterPath);
+
+app.listen(port, () => console.log(`Server running on http://localhost:${port}`));

@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 // import Home from './Pages/Home';
 // import Getdata from './Pages/Generals/Getdata';
 // import Putdata from './Pages/Generals/Putdata';
-import UpdateUser from './Pages/UpdateUser/UpdateUser';
+// import UpdateUser from './Pages/UpdateUser/UpdateUser';
 
 
  import UtilityStore from './Pages/UtilityStore/UtilityStore';
@@ -24,13 +24,13 @@ function App() {
                 <Route path="/" element={<UtilityStore/>}/>
                 <Route path="/UtilityStore" element={<UtilityStore/>}/>
                  <Route path="/Team" element={<Team/>}/>
-                  <Route path="/Products" element={<Products/>}/>
+                  <Route path="/getdata" element={<Products/>}/>
                    <Route path="/Signin" element={<Signin/>}/> 
 
               {/* <Route path="/getdata" element={<Getdata/>}/>
               <Route path="/putdata" element={<Putdata/>}/>
               <Route path="/putdata/:id" element={<Putdata/>} /> */}
-               <Route path="/UpdateUser/:id" element={<UpdateUser/>} />
+               {/* <Route path="/UpdateUser/:id" element={<UpdateUser/>} /> */}
 
 
 

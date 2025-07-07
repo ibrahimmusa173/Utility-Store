@@ -2,16 +2,16 @@
 
 
 
-const mysql = require("mysql"); // Added missing 'const'
+const sql = require("mysql"); // Added missing 'const'
 
-const db = mysql.createConnection({
+const sqlconnect = sql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
     database: "laravel"
 });
 
-db.connect((err) => {
+sqlconnect.connect((err) => {
     if (err) {
         console.error("MySQL connection error:", err);
     } else {
@@ -19,4 +19,4 @@ db.connect((err) => {
     }
 });
 
-module.exports = db;
+module.exports = sqlconnect;                 
