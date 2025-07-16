@@ -7,8 +7,8 @@ import { Routes, Route } from 'react-router-dom';
 
  import UtilityStore from './Pages/UtilityStore/UtilityStore';
  import Team from './Pages/Team/Team';
-import Products from './Pages/Products/Products';
-import Signin from './Pages/Signin/Signin';
+import DataFetch from './Pages/DataFetch/DataFetch';
+import DataPost from './Pages/DataPost/DataPost';
 
 function App() {
 
@@ -24,8 +24,8 @@ function App() {
                 <Route path="/" element={<UtilityStore/>}/>
                 <Route path="/UtilityStore" element={<UtilityStore/>}/>
                  <Route path="/Team" element={<Team/>}/>
-                  <Route path="/getdata" element={<Products/>}/>
-                   <Route path="/Signin" element={<Signin/>}/> 
+                  <Route path="/DataFetch" element={<DataFetch/>}/>
+                   <Route path="/DataPost" element={<DataPost/>}/> 
 
               {/* <Route path="/getdata" element={<Getdata/>}/>
               <Route path="/putdata" element={<Putdata/>}/>
