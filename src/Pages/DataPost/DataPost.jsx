@@ -1,3 +1,6 @@
+import Header from '../../Components/Header/Header'
+import Footer from '../../Components/Footer/Footer'
+
 // src/Backend/DataPost.js
 import { useState } from "react";
 import axios from "axios";
@@ -35,6 +38,9 @@ function DataPost() {
 
   // ... (the rest of your JSX is fine, no changes needed there) ...
   return (
+  <div>
+      <Header/>
+
       <div className="p-4 max-w-md mx-auto">
         <Link className="font-bold text-xl border border-black bg-yellow-400 px-4 py-2 mb-4 inline-block rounded" to="/DataFetch">View Users</Link>
         <h1 className="text-2xl mb-4">Add New User</h1>
@@ -45,6 +51,9 @@ function DataPost() {
           <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded w-full">Add User</button>
         </form>
       </div>
+      
+       <Footer/>
+       </div>
   );
 }
 

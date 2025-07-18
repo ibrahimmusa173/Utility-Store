@@ -1,3 +1,6 @@
+import Header from '../../Components/Header/Header'
+import Footer from '../../Components/Footer/Footer'
+
 // src/Backend/DataFetch.js
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -27,6 +30,9 @@ function DataFetch() {
 
   // ... (the rest of your JSX is fine, no changes needed there) ...
   return (
+    <div>
+      <Header/>
+
     <div className="p-4 max-w-2xl mx-auto">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-3xl font-bold">User List</h1>
@@ -63,8 +69,11 @@ function DataFetch() {
           </li>
         ))}
       </ul>
-    </div>
+    </div>  
+     <Footer/>
+     </div>
   );
 }
+
 
 export default DataFetch;
