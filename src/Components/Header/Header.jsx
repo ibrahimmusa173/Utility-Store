@@ -39,8 +39,8 @@ function Header(){
                     <div className="grid grid-cols-2 sm:grid-cols-4 ">
                 <a className="flex items-center justify-center m-2 p-3 sm:mr-4 sm:ml-2 bg-amber-500 font-semibold rounded-md hover:bg-yellow-300 duration-300 hover:scale-105" href="/UtilityStore">About</a>
                 <a className="flex items-center justify-center m-2 p-3 sm:mr-4 bg-amber-500 font-semibold rounded-md hover:bg-yellow-300 duration-300 hover:scale-105 " href="/Team">Team</a>
-                <a className="flex items-center justify-center m-2 p-3 sm:mr-4 bg-amber-500 font-semibold rounded-md hover:bg-yellow-300 duration-300 hover:scale-105" href="/DataFetch">Products</a>
-                <a className="flex items-center justify-center m-2 p-3 sm:mr-4 bg-amber-500 font-semibold rounded-md hover:bg-yellow-300 duration-300 hover:scale-105" href="/DataPost">Sign in</a>
+                <a className="flex items-center justify-center m-2 p-3 sm:mr-4 bg-amber-500 font-semibold rounded-md hover:bg-yellow-300 duration-300 hover:scale-105" href="/Products">Products</a>
+                <a className="flex items-center justify-center m-2 p-3 sm:mr-4 bg-amber-500 font-semibold rounded-md hover:bg-yellow-300 duration-300 hover:scale-105" href="/login">Sign in</a>
             </div></div>
 
 

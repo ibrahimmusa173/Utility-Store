@@ -1,23 +1,20 @@
-// routes/user.routes.js
+const verifyToken = require("../middleware/auth.middleware.js");
+
 module.exports = app => {
     const users = require("../controllers/user.controller.js");
     const router = require("express").Router();
 
-    // Create a new User
-    router.post("/", users.create);
+    // The user creation route is now /api/auth/register.
+    // We remove the public POST route from here.
+    // router.post("/", users.create);
 
-    // Retrieve all Users
-    router.get("/", users.findAll);
+    // ALL ROUTES BELOW ARE NOW PROTECTED
+    // A valid token must be provided in the header to access them.
+    router.get("/", [verifyToken], users.findAll);
+    router.get("/:id", [verifyToken], users.findOne);
+    router.put("/:id", [verifyToken], users.update);
+    router.delete("/:id", [verifyToken], users.delete);
 
-    // Retrieve a single User with id
-    router.get("/:id", users.findOne);
-
-    // Update a User with id
-    router.put("/:id", users.update);
-
-    // Delete a User with id
-    router.delete("/:id", users.delete);
-
-    // All your user routes will be prefixed with /api/users
+    // All protected routes are prefixed with /api/users
     app.use('/api/users', router);
 };

@@ -1,6 +1,6 @@
-import Header from '../../Components/Header/Header'
+
 import Slider from '../../Components/Common/Slider'
-import Footer from '../../Components/Footer/Footer'
+
 
 import History from './History'
 import Leadership from './Leadership'
@@ -13,7 +13,7 @@ function UtilityStore(){
              <div>
 
             
-        <Header/>
+        
 
         <Slider/>
 
@@ -25,7 +25,7 @@ function UtilityStore(){
         
 
 
-        <Footer/>
+     
           
         
         </div>
