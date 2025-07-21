@@ -1,44 +1,4 @@
-// import { Routes, Route } from 'react-router-dom';
 
-
-
-//  import UtilityStore from './Pages/UtilityStore/UtilityStore';
-//  import Team from './Pages/Team/Team';
-// import DataView from './Pages/DataView/DataView';
-// import DataPost from './Pages/Authentication/DataPost';
-
-// function App() {
-
-//   return (
-//     <>
-   
-      
-//             <Routes>
-
-             
-
-//                 <Route path="/" element={<UtilityStore/>}/>
-//                 <Route path="/UtilityStore" element={<UtilityStore/>}/>
-//                  <Route path="/Team" element={<Team/>}/>
-//                   <Route path="/Products" element={<DataView/>}/>
-//                    <Route path="/Signin" element={<DataPost/>}/> 
-
-              
-
-
-
-
-
-
-//             </Routes>
-
-
-//     </>
-//   )
-// }
-
-// export default App
-// src/App.jsx - CORRECTED VERSION
 
 // src/App.jsx - CORRECTED VERSION
 
@@ -76,9 +36,10 @@ function App() {
             <Route path="/" element={<UtilityStore />} />
             <Route path="/UtilityStore" element={<UtilityStore />} />
             <Route path="/Team" element={<Team />} />
+            <Route path="/Products" element={<DataView />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/Products" element={<DataView />} />
+            
             
             {/* --- ADD NEW PUBLIC ROUTES FOR PASSWORD RESET --- */}
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
