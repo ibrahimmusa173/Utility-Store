@@ -1,45 +1,51 @@
-// src/Pages/Authentication/DataPost.jsx - CORRECTED VERSION
+// src/Pages/Authentication/DataPost.jsx - NEW VERSION
 
 import { useState } from "react";
-import axios from "axios"; // Use the global axios for the public register endpoint
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
+
+const CATEGORIES = ["Ghee & Oil", "Rice & Pulses", "Snacks & Spices", "Cold Drinks"];
 
 function DataPost() {
+  const [category, setCategory] = useState(CATEGORIES[0]);
   const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  // 1. Add state for the password, as it's required for registration
-  const [password, setPassword] = useState('');
+  const [price, setPrice] = useState('');
+  const [image, setImage] = useState(null); // State to hold the file object
+  const [error, setError] = useState('');
 
   const navigate = useNavigate();
+  const { api } = useAuth(); // Use the authenticated api instance
 
-  const createUser = async (e) => {
+  const createProduct = async (e) => {
     e.preventDefault();
+    setError('');
 
-    // Add password to the validation check
-    if (!name || !username || !email || !password) {
-      alert("Please fill in all fields, including a password.");
+    if (!name || !price || !image) {
+      setError("Please fill in all fields and choose an image.");
       return;
     }
 
+    // FormData is required for sending files
+    const formData = new FormData();
+    formData.append('category', category);
+    formData.append('name', name);
+    formData.append('price', price);
+    formData.append('image', image); // The key 'image' must match the multer field name in the backend
+
     try {
-      // 2. Change the URL to the correct public registration endpoint
-      await axios.post("http://localhost:7000/api/auth/register", {
-        name,
-        username,
-        email,
-        password // 3. Include the password in the data sent to the server
+      await api.post("/products", formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       });
 
-      alert("New user added successfully!");
-      // Navigate to the dashboard where you can see the user list
+      alert("New product added successfully!");
       navigate("/DataFetch"); 
 
-    } catch (error) {
-      // Provide more specific error feedback
-      const errorMessage = error.response?.data?.message || "Failed to add new user. Please try again.";
-      console.error("Error creating user:", error);
-      alert(errorMessage);
+    } catch (err) {
+      const errorMessage = err.response?.data?.message || "Failed to add new product.";
+      console.error("Error creating product:", err);
+      setError(errorMessage);
     }
   };
 
@@ -49,52 +55,69 @@ function DataPost() {
         className="font-bold text-xl border border-black bg-yellow-400 px-4 py-2 mb-4 inline-block rounded" 
         to="/DataFetch"
       >
-        Back to Dashboard
+        Back to Product Dashboard
       </Link>
-      <h1 className="text-2xl mb-4">Add New User</h1>
-      <p className="text-sm text-gray-600 mb-4">
-        This form creates a new user in the system, similar to public registration.
-      </p>
-      <form onSubmit={createUser} className="space-y-4">
-        <input 
-          type="text" 
-          placeholder="Name" 
-          value={name} 
-          onChange={(e) => setName(e.target.value)} 
-          className="border p-2 w-full rounded"
-          required
-        />
-        <input 
-          type="text" 
-          placeholder="Username" 
-          value={username} 
-          onChange={(e) => setUsername(e.target.value)} 
-          className="border p-2 w-full rounded"
-          required
-        />
-        <input 
-          type="email" 
-          placeholder="Email" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          className="border p-2 w-full rounded"
-          required
-        />
-        {/* 4. Add the input field for the password to the form */}
-        <input 
-          type="password" 
-          placeholder="Set a Password for the new user" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          className="border p-2 w-full rounded"
-          autoComplete="new-password"
-          required
-        />
+      <h1 className="text-2xl mb-4">Add New Product</h1>
+      {error && <p className="bg-red-100 text-red-700 p-3 rounded mb-4">{error}</p>}
+      
+      <form onSubmit={createProduct} className="space-y-4">
+        <div>
+          <label htmlFor="category" className="block text-sm font-medium text-gray-700">Choose Category</label>
+          <select 
+            id="category"
+            value={category} 
+            onChange={(e) => setCategory(e.target.value)}
+            className="border p-2 w-full rounded mt-1"
+            required
+          >
+            {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700">Product Name</label>
+          <input 
+            id="name"
+            type="text" 
+            placeholder="e.g., Basmati Rice 1kg" 
+            value={name} 
+            onChange={(e) => setName(e.target.value)} 
+            className="border p-2 w-full rounded mt-1"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="price" className="block text-sm font-medium text-gray-700">Product Price</label>
+          <input 
+            id="price"
+            type="number" 
+            step="0.01"
+            placeholder="e.g., 150.50" 
+            value={price} 
+            onChange={(e) => setPrice(e.target.value)} 
+            className="border p-2 w-full rounded mt-1"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="image" className="block text-sm font-medium text-gray-700">Product Image</label>
+          <input 
+            id="image"
+            type="file" 
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])} 
+            className="border p-2 w-full rounded mt-1 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            required
+          />
+        </div>
+        
         <button 
           type="submit" 
           className="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600"
         >
-          Add User
+          Add Product
         </button>
       </form>
     </div>

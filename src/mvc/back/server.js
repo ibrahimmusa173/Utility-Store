@@ -1,24 +1,37 @@
-// src/mvc/back/server.js
-
 const express = require("express");
-const bodyParser = require("body-parser");
 const cors = require("cors");
+const path = require('path'); // You MUST import the 'path' module to use path.join
 
 const app = express();
-const port = 7000;
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to the user management API." });
-});
+// ===================================================================
+//  THE FIX: MAKE THE 'UPLOADS' FOLDER PUBLICLY ACCESSIBLE
+//
+//  This line tells Express: "If you receive a request that starts
+//  with '/uploads' in the URL, treat it as a request for a static file
+//  and look for it inside the physical folder located at path.join(__dirname, 'uploads')."
+//  __dirname is a Node.js variable that gives the path of the current file's directory.
+// ===================================================================
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Import and use routes
-require("./routes/auth.routes.js")(app);
-require("./routes/public.routes.js")(app); // This line requires the file you just created
-require("./routes/user.routes.js")(app);
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+// --- API ROUTES ---
+// Make sure these paths correctly point to your route files.
+const authRoutes = require("./routes/auth.routes.js");
+const productRoutes = require("./routes/product.routes.js");
+// If you have more routes, require them here.
+
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
+// app.use('/api/users', userRoutes); // Add other routes if you have them
+
+
+// Set port and start the server
+const PORT = process.env.PORT || 7000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
 });

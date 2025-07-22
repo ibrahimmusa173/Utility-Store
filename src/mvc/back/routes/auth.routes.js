@@ -1,20 +1,8 @@
-// C:/Users/user/Documents/GitHub/Backend-/src/mvc/back/routes/auth.routes.js
+const express = require("express");
+const router = express.Router();
+const auth = require("../controllers/auth.controller.js");
 
-module.exports = app => {
-    const auth = require("../controllers/auth.controller.js");
+router.post("/register", auth.register);
+router.post("/login", auth.login);
 
-    var router = require("express").Router();
-
-    // Route for user registration
-    router.post("/register", auth.register);
-
-    // Route for user login
-    router.post("/login", auth.login);
-
-    // --- ADDED PASSWORD RESET ROUTES ---
-    router.post("/forgot-password", auth.forgotPassword);
-    router.post("/reset-password/:token", auth.resetPassword);
-
-    // This is the base path for all auth-related routes
-    app.use('/api/auth', router);
-};
+module.exports = router;
