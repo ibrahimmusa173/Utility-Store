@@ -1,14 +1,36 @@
-# React + Vite + TailWindCSS - A Template Repo
+# 🛒 Utility Store Management System
 
-It is a template repository for you to start a project using React and TailwindCSS. You just need to create a new repository from this template repo by clicking the button at the top right corner of this page.
+A full-stack e-commerce and administrative platform built using the **MVC (Model-View-Controller)** architecture. This project enables public users to browse products while providing a secure dashboard for administrators to manage inventory and user data.
 
-## Watch This Video
+## 🚀 Tech Stack
 
-https://www.youtube.com/watch?v=Zk2YJUvfsOA
+### Frontend
+* **Library:** React 19 (Vite)
+* **Styling:** Tailwind CSS
+* **State Management:** Context API (AuthContext)
+* **Routing:** React Router 7
+* **API Client:** Axios with Interceptors (Automatic JWT handling)
 
-## Links
+### Backend
+* **Runtime:** Node.js & Express
+* **Database:** MySQL
+* **Authentication:** JSON Web Tokens (JWT) & Bcryptjs
+* **File Uploads:** Multer (for product images)
+* **Security:** Helmet.js & CORS
 
-- Install Node.js: https://nodejs.org/en
-- Install Vite: https://vitejs.dev/
-- TailwindCSS: https://tailwindcss.com/
-- How to Learn TailwindCSS?: https://www.youtube.com/shorts/BhasK2BPn8c
+## ✨ Key Features
+
+### 🔐 Authentication & Security
+* **JWT Session Management:** Secure login and registration.
+* **Protected Routes:** Private dashboards accessible only to logged-in users.
+* **Password Recovery:** Complete "Forgot Password" and "Reset Password" workflow.
+* **Axios Interceptors:** Automatically attaches tokens to every request.
+
+### 📦 Product Management (Full CRUD)
+* **Image Uploads:** Seamlessly upload and store product images using Multer.
+* **Public Catalog:** Searchable and category-filtered product view for guests.
+* **Admin Controls:** Add, Edit (with image update), and Delete products.
+
+### 👥 User Administration
+* **Data Management:** View list of registered users.
+* **User Profiles:** Update user information via an administrative interface.
