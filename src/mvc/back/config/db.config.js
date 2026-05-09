@@ -1,7 +1,7 @@
-// config/db.config.js
 module.exports = {
-  HOST: "localhost",
-  USER: "root",
-  PASSWORD: "",
-  DB: "laravel" // Your database name
+  HOST: process.env.MYSQLHOST || "localhost",
+  USER: process.env.MYSQLUSER || "root",
+  PASSWORD: process.env.MYSQLPASSWORD || "",
+  DB: process.env.MYSQLDATABASE || "laravel",
+  PORT: process.env.MYSQLPORT || 3306
 };

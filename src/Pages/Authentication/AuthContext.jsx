@@ -2,6 +2,7 @@ import { createContext, useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import API_URL from '../../mvc/back/config/db.config.js';
 
 const AuthContext = createContext(null);
 
@@ -10,7 +11,7 @@ export const useAuth = () => useContext(AuthContext);
 
 // Create a configured axios instance for protected routes
 const api = axios.create({
-  baseURL: 'http://localhost:7000/api'
+  baseURL: `${API_URL}/api`
 });
 
 // Use an interceptor to automatically add the auth token to requests
@@ -37,7 +38,7 @@ export const AuthProvider = ({ children }) => {
     }, [token]);
 
     const login = async (email, password) => {
-        const response = await axios.post('http://localhost:7000/api/auth/login', { email, password });
+        const response = await axios.post(`${API_URL}/api/auth/login`, { email, password });
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
         setToken(response.data.token);
@@ -47,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const register = async (userData) => {
-        return await axios.post('http://localhost:7000/api/auth/register', userData);
+        return await axios.post(`${API_URL}/api/auth/register`, userData);
     };
 
     const logout = () => {
@@ -61,12 +62,12 @@ export const AuthProvider = ({ children }) => {
     // --- ADDED PASSWORD RESET FUNCTIONS ---
     const forgotPassword = async (email) => {
         // This is a public endpoint, so we can use the global axios
-        return await axios.post('http://localhost:7000/api/auth/forgot-password', { email });
+        return await axios.post(`${API_URL}/api/auth/forgot-password`, { email });
     };
 
     const resetPassword = async (token, password) => {
         // This is also a public endpoint
-        return await axios.post(`http://localhost:7000/api/auth/reset-password/${token}`, { password });
+        return await axios.post(`${API_URL}/api/auth/reset-password/${token}`, { password });
     };
     
     // Add the new functions to the 'value' object

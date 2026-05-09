@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Link is already correctly imported
 import { useAuth } from "./AuthContext"; 
 import axios from 'axios';
+import API_URL from '../../mvc/back/config/db.config.js';
 
 function DataFetch() {
   const [products, setProducts] = useState([]);
@@ -11,7 +12,7 @@ function DataFetch() {
   const { api, logout, user } = useAuth();
 
   const fetchProducts = () => {
-    axios.get("http://localhost:7000/api/products") 
+    axios.get(`${API_URL}/api/products`) 
       .then((response) => setProducts(response.data))
       .catch((err) => {
         console.error("Error fetching products:", err);
@@ -43,8 +44,7 @@ function DataFetch() {
   const getFullImageUrl = (imageUrl) => {
     if (!imageUrl) return ''; // Handle case where imageUrl might be null or undefined
     // Replace backslashes with forward slashes for URL compatibility
-    const correctedUrl = imageUrl.replace(/\\/g, '/');
-    return `http://localhost:7000/${correctedUrl}`;
+    return `${API_URL}/${imageUrl.replace(/\\/g, '/')}`;
   };
 
   return (

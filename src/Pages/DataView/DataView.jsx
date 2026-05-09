@@ -3,13 +3,14 @@
 import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 import PropTypes from 'prop-types'; // Import PropTypes
+import API_URL from '../../mvc/back/config/db.config.js';
 
 const CATEGORIES = ["All", "Ghee & Oil", "Rice & Pulses", "Snacks & Spices", "Cold Drinks"];
 
 function ProductCard({ product }) {
   // The server provides a relative path like 'uploads/image.jpg'. 
   // We construct the full URL to fetch the image.
-  const imageUrl = `http://localhost:7000/${product.imageUrl}`;
+  const imageUrl = `${API_URL}/${product.imageUrl}`;
 
   return (
     <div className="border rounded-lg shadow-sm overflow-hidden">
@@ -42,7 +43,7 @@ function DataView() {
 
   useEffect(() => {
     // This is a public endpoint, so we use the global axios instance
-    axios.get("http://localhost:7000/api/products")
+    axios.get(`${API_URL}/api/products`)
       .then((response) => {
         setProducts(response.data);
       })

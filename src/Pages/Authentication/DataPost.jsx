@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
+
 const CATEGORIES = ["Ghee & Oil", "Rice & Pulses", "Snacks & Spices", "Cold Drinks"];
 
 function DataPost() {
