@@ -4,12 +4,25 @@ const path = require('path');
 
 const app = express();
 
-app.use(cors());
+// --- UPDATED CORS CONFIGURATION ---
+// This allows your Vercel frontend to talk to this Railway backend
+app.use(cors({
+  origin: ["https://utility-store.vercel.app", "http://localhost:5173"], 
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve uploaded images
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// --- HEALTH CHECK ROUTE ---
+// If you visit your Railway URL in a browser, you should see this message
+app.get("/", (req, res) => {
+  res.json({ message: "Utility Store Backend is running successfully!" });
+});
 
 const authRoutes = require("./routes/auth.routes.js");
 const productRoutes = require("./routes/product.routes.js");
@@ -19,6 +32,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 
+// Railway automatically provides a PORT variable
 const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);

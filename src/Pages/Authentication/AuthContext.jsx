@@ -11,7 +11,7 @@ export const useAuth = () => useContext(AuthContext);
 
 // Create a configured axios instance for protected routes
 const api = axios.create({
-  baseURL: `${API_URL}/api`
+  baseURL: (import.meta.env.VITE_API_URL || 'http://localhost:7000') + '/api'
 });
 
 // Use an interceptor to automatically add the auth token to requests
