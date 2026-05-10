@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "./AuthContext";
-import API_URL from '../../mvc/back/config/db.config.js';
 
 const CATEGORIES = ["Ghee & Oil", "Rice & Pulses", "Snacks & Spices", "Cold Drinks"];
 
@@ -30,7 +29,7 @@ function ProductUpdate() {
         setName(product.name);
         setCategory(product.category);
         setPrice(product.price);
-        setCurrentImageUrl(`${API_URL}/${product.imageUrl}`);
+        setCurrentImageUrl(`http://localhost:7000/${product.imageUrl}`);
         setLoading(false);
       })
       .catch(err => {
