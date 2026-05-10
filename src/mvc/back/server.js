@@ -7,7 +7,11 @@ const app = express();
 // --- UPDATED CORS CONFIGURATION ---
 // This allows your Vercel frontend to talk to this Railway backend
 app.use(cors({
-  origin: ["https://utility-store.vercel.app", "http://localhost:5173"], 
+    origin: [
+    'https://your-app.vercel.app',  // your actual Vercel URL
+    'http://localhost:3000',         // for local dev
+    'http://localhost:5173'          // Vite dev server
+  ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));

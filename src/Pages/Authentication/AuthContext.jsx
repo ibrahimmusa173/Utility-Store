@@ -2,7 +2,7 @@ import { createContext, useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import API_URL from '../../mvc/back/config/db.config.js';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AuthContext = createContext(null);
 
