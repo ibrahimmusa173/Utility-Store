@@ -1,61 +1,71 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
-const API_URL = import.meta.env.VITE_API_URL;
-=======
->>>>>>> parent of c14c69b (For online Vercel+Railway)
 
-const AuthContext = createContext(null);
+// --- 1. CONFIGURATION ---
+// This uses the Railway URL if deployed, or localhost if running locally.
+// The '?' prevents the crash if import.meta.env is undefined.
+const BASE_URL = import.meta.env?.VITE_API_URL || 'http://localhost:7000/api';
 
-// eslint-disable-next-line react-refresh/only-export-components
-export const useAuth = () => useContext(AuthContext);
-
-// Create a configured axios instance for protected routes
-const api = axios.create({
-<<<<<<< HEAD
-  baseURL: (import.meta.env.VITE_API_URL || 'http://localhost:7000') + '/api'
-=======
-  baseURL: 'http://localhost:7000/api'
->>>>>>> parent of c14c69b (For online Vercel+Railway)
+// Create a configured axios instance for protected routes (those requiring a token)
+export const api = axios.create({
+  baseURL: BASE_URL
 });
 
-// Use an interceptor to automatically add the auth token to requests
+// Interceptor to add the Bearer token to every request automatically
 api.interceptors.request.use(config => {
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
-}, error => {
-  return Promise.reject(error);
-});
+}, error => Promise.reject(error));
+
+
+const AuthContext = createContext(null);
+
+export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(localStorage.getItem('token'));
     const navigate = useNavigate();
 
+    // On initial load, sync user data from localStorage
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser && token) {
-            setUser(JSON.parse(storedUser));
+            try {
+                setUser(JSON.parse(storedUser));
+            } catch (e) {
+                console.error("Error parsing stored user", e);
+                localStorage.removeItem('user');
+            }
         }
     }, [token]);
 
+    // --- 2. AUTHENTICATION ACTIONS ---
+
     const login = async (email, password) => {
-        const response = await axios.post('http://localhost:7000/api/auth/login', { email, password });
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        setToken(response.data.token);
-        setUser(response.data.user);
-        navigate('/DataFetch'); // Navigate to user list after login
+        // We use the full dynamic URL here
+        const response = await axios.post(`${BASE_URL}/auth/login`, { email, password });
+        
+        const { token: receivedToken, user: receivedUser } = response.data;
+        
+        localStorage.setItem('token', receivedToken);
+        localStorage.setItem('user', JSON.stringify(receivedUser));
+        
+        setToken(receivedToken);
+        setUser(receivedUser);
+        
+        navigate('/DataFetch'); 
         return response.data;
     };
 
     const register = async (userData) => {
-        return await axios.post('http://localhost:7000/api/auth/register', userData);
+        return await axios.post(`${BASE_URL}/auth/register`, userData);
     };
 
     const logout = () => {
@@ -66,18 +76,17 @@ export const AuthProvider = ({ children }) => {
         navigate('/login');
     };
 
-    // --- ADDED PASSWORD RESET FUNCTIONS ---
+    // --- 3. PASSWORD RESET ACTIONS ---
+
     const forgotPassword = async (email) => {
-        // This is a public endpoint, so we can use the global axios
-        return await axios.post('http://localhost:7000/api/auth/forgot-password', { email });
+        return await axios.post(`${BASE_URL}/auth/forgot-password`, { email });
     };
 
-    const resetPassword = async (token, password) => {
-        // This is also a public endpoint
-        return await axios.post(`http://localhost:7000/api/auth/reset-password/${token}`, { password });
+    const resetPassword = async (resetToken, password) => {
+        return await axios.post(`${BASE_URL}/auth/reset-password/${resetToken}`, { password });
     };
     
-    // Add the new functions to the 'value' object
+    // Provide state and actions to the rest of the app
     const value = { 
         user, 
         token, 
@@ -85,9 +94,9 @@ export const AuthProvider = ({ children }) => {
         login, 
         logout, 
         register, 
-        api,
-        forgotPassword, // <-- ADDED
-        resetPassword   // <-- ADDED
+        api, // Shared axios instance
+        forgotPassword,
+        resetPassword
     };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
