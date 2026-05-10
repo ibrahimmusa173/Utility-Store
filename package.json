@@ -33,7 +33,7 @@
   },
 "scripts": {
     "start": "vite",
-    "server": "nodemon src/mvc/back/server.js",
+    "server": "node src/mvc/back/server.js",
     "dev": "concurrently \"npm run server\" \"npm run start\"",
     "build": "vite build",
     "preview": "vite preview"

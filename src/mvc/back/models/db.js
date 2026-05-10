@@ -1,19 +1,24 @@
-// models/db.js
-const mysql = require("mysql");
-const dbConfig = require("../config/db.config.js");
+const mysql = require("mysql2");
+const path = require("path");
+// This line finds your .env file at the root of the project
+require('dotenv').config({ path: path.resolve(process.cwd(), '.env') });
 
-// Create a connection to the database
 const connection = mysql.createConnection({
-  host: dbConfig.HOST,
-  user: dbConfig.USER,
-  password: dbConfig.PASSWORD,
-  database: dbConfig.DB
+  host: process.env.MYSQLHOST || "localhost",
+  user: process.env.MYSQLUSER || "root",
+  password: process.env.MYSQLPASSWORD || "",
+  database: process.env.MYSQLDATABASE || "laravel",
+  port: process.env.MYSQLPORT || 3306
 });
 
-// Open the MySQL connection
 connection.connect(error => {
-  if (error) throw error;
-  console.log("Successfully connected to the database.");
+  if (error) {
+    console.error("❌ DATABASE ERROR: Could not connect to Railway.");
+    console.error("Current Host attempted:", process.env.MYSQLHOST || "localhost");
+    console.error("Make sure your .env file has the EXTERNAL Railway host.");
+    return;
+  }
+  console.log("✅ Successfully connected to the database.");
 });
 
 module.exports = connection;
