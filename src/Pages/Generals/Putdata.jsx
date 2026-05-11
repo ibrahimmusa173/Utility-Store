@@ -3,12 +3,16 @@ import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+// Dynamic URLs
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:7000/api';
+// form1 endpoint is not in the /api route structure, so we remove /api to get the base domain
+const BASE_URL = API_URL.replace(/\/api\/?$/, ''); 
+
 function Userregistration() {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  
 
   const createUser = async () => {
     // Basic validation
@@ -19,8 +23,8 @@ function Userregistration() {
 
     setLoading(true);
     try {
-      // Using the original endpoint from your code
-      const response = await axios.post("http://localhost:7000/form1", {
+      // Using the dynamic BASE_URL mapped to /form1
+      const response = await axios.post(`${BASE_URL}/form1`, {
         name,
         username,
         email
@@ -36,8 +40,6 @@ function Userregistration() {
         setName('');
         setUsername('');
         setEmail('');
-        // Optionally navigate back to user list
-        // navigate('/getdata');
       }
     } catch (error) {
       console.error("Error creating user:", error);

@@ -1,38 +1,44 @@
 // src/Pages/Authentication/DataFetch.jsx
-import { useEffect, useState, useCallback } from "react"; // 1. Added useCallback
+
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "./AuthContext"; 
+import axios from 'axios';
+
+// Get Dynamic URLs
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:7000/api';
+// Remove '/api' from the end to get the base URL for images
+const BASE_URL = API_URL.replace(/\/api\/?$/, ''); 
 
 function DataFetch() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState('');
   const { api, logout, user } = useAuth();
 
-  // 2. Wrap the fetch function in useCallback to make it a stable dependency
-  const fetchProducts = useCallback(() => {
-    api.get("/products") 
+  const fetchProducts = () => {
+    axios.get(`${API_URL}/products`) 
       .then((response) => setProducts(response.data))
       .catch((err) => {
         console.error("Error fetching products:", err);
         setError("Failed to load products.");
       });
-  }, [api]); // Re-create only if 'api' instance changes
+  };
 
-  // 3. Now it is safe to include fetchProducts in the dependency array
   useEffect(() => {
     fetchProducts();
-  }, [fetchProducts]);
+  },[]);
 
   const handleDelete = async (productId) => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
+    if (window.confirm("Are you sure you want to delete this product? This cannot be undone.")) {
       try {
         await api.delete(`/products/${productId}`);
         alert("Product deleted successfully!");
-        fetchProducts(); // Refresh list after delete
-      } catch (err) {
-        const errorMessage = err.response?.data?.message || "Failed to delete product.";
+        fetchProducts();
+      } catch (error) {
+        const errorMessage = error.response?.data?.message || "Failed to delete product.";
+        console.error("Failed to delete product:", error);
         alert(errorMessage);
-        if (err.response && err.response.status === 401) {
+        if (error.response && error.response.status === 401) {
             logout();
         }
       }
@@ -40,10 +46,10 @@ function DataFetch() {
   };
 
   const getFullImageUrl = (imageUrl) => {
-    if (!imageUrl) return '';
-    // Construct dynamic backend URL (removes /api from the end)
-    const backendBase = (import.meta.env?.VITE_API_URL || 'http://localhost:7000/api').replace('/api', '');
-    return `${backendBase}/${imageUrl.replace(/\\/g, '/')}`;
+    if (!imageUrl) return ''; 
+    // Replace backslashes with forward slashes for URL compatibility
+    const correctedUrl = imageUrl.replace(/\\/g, '/');
+    return `${BASE_URL}/${correctedUrl}`;
   };
 
   return (
@@ -71,6 +77,7 @@ function DataFetch() {
                 <tr>
                     <th className="py-2 px-4 border-b">Image</th>
                     <th className="py-2 px-4 border-b">Name</th>
+                    <th className="py-2 px-4 border-b">Category</th>
                     <th className="py-2 px-4 border-b">Price</th>
                     <th className="py-2 px-4 border-b">Actions</th>
                 </tr>
@@ -82,6 +89,7 @@ function DataFetch() {
                             <img src={getFullImageUrl(product.imageUrl)} alt={product.name} className="h-16 w-16 object-cover mx-auto rounded"/>
                         </td>
                         <td className="py-2 px-4 border-b">{product.name}</td>
+                        <td className="py-2 px-4 border-b">{product.category}</td>
                         <td className="py-2 px-4 border-b">₹{parseFloat(product.price).toFixed(2)}</td>
                         <td className="py-2 px-4 border-b space-x-2">
                           <Link 
@@ -90,6 +98,7 @@ function DataFetch() {
                           >
                             Edit
                           </Link>
+                          
                           <button onClick={() => handleDelete(product.id)} className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
                               Delete
                           </button>

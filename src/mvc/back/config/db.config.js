@@ -1,11 +1,9 @@
-// config/db.config.js
-module.exports = {
+require('dotenv').config();
 
-  HOST: process.env.MYSQLHOST || "localhost", 
+module.exports = {
+  HOST: process.env.MYSQLHOST || "localhost",
   USER: process.env.MYSQLUSER || "root",
-  PASSWORD: process.env.MYSQLPASSWORD || "oebroPRDxJJHBZEMDnZhxBdOAeTDIiIj ",
+  PASSWORD: process.env.MYSQLPASSWORD || "",
   DB: process.env.MYSQLDATABASE || "laravel",
   PORT: process.env.MYSQLPORT || 3306
-
- 
 };

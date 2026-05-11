@@ -1,34 +1,31 @@
-/* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-// SAFE URL CONFIGURATION
-// It looks for your Vercel/Railway variable first, then falls back to local.
-const getBaseUrl = () => {
-  return import.meta.env?.VITE_API_URL || 'http://localhost:7000/api';
-};
+const AuthContext = createContext(null);
 
-export const BASE_URL = getBaseUrl();
+// Get the API URL from Vite Environment Variables, fallback to localhost
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:7000/api';
 
-// This 'api' instance is what you should use for ALL database requests.
-// It already knows the correct URL and attaches your login token.
-export const api = axios.create({
-  baseURL: BASE_URL
+// eslint-disable-next-line react-refresh/only-export-components
+export const useAuth = () => useContext(AuthContext);
+
+// Create a configured axios instance for protected routes using dynamic URL
+const api = axios.create({
+  baseURL: API_URL
 });
 
+// Use an interceptor to automatically add the auth token to requests
 api.interceptors.request.use(config => {
   const token = localStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
-}, error => Promise.reject(error));
-
-
-const AuthContext = createContext(null);
-export const useAuth = () => useContext(AuthContext);
+}, error => {
+  return Promise.reject(error);
+});
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
@@ -38,27 +35,22 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser && token) {
-            try {
-                setUser(JSON.parse(storedUser));
-            } catch (e) {
-                localStorage.removeItem('user');
-            }
+            setUser(JSON.parse(storedUser));
         }
     }, [token]);
 
     const login = async (email, password) => {
-        const response = await axios.post(`${BASE_URL}/auth/login`, { email, password });
-        const { token: receivedToken, user: receivedUser } = response.data;
-        localStorage.setItem('token', receivedToken);
-        localStorage.setItem('user', JSON.stringify(receivedUser));
-        setToken(receivedToken);
-        setUser(receivedUser);
-        navigate('/DataFetch'); 
+        const response = await axios.post(`${API_URL}/auth/login`, { email, password });
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        setToken(response.data.token);
+        setUser(response.data.user);
+        navigate('/DataFetch'); // Navigate to user list after login
         return response.data;
     };
 
     const register = async (userData) => {
-        return await axios.post(`${BASE_URL}/auth/register`, userData);
+        return await axios.post(`${API_URL}/auth/register`, userData);
     };
 
     const logout = () => {
@@ -70,15 +62,28 @@ export const AuthProvider = ({ children }) => {
     };
 
     const forgotPassword = async (email) => {
-        return await axios.post(`${BASE_URL}/auth/forgot-password`, { email });
+        return await axios.post(`${API_URL}/auth/forgot-password`, { email });
     };
 
-    const resetPassword = async (resetToken, password) => {
-        return await axios.post(`${BASE_URL}/auth/reset-password/${resetToken}`, { password });
+    const resetPassword = async (token, password) => {
+        return await axios.post(`${API_URL}/auth/reset-password/${token}`, { password });
     };
     
-    const value = { user, token, isAuthenticated: !!token, login, logout, register, api, forgotPassword, resetPassword };
+    const value = { 
+        user, 
+        token, 
+        isAuthenticated: !!token, 
+        login, 
+        logout, 
+        register, 
+        api,
+        forgotPassword, 
+        resetPassword   
+    };
+
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-AuthProvider.propTypes = { children: PropTypes.node.isRequired };
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired
+};
