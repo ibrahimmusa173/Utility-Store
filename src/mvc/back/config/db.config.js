@@ -7,3 +7,4 @@ module.exports = {
   DB: process.env.MYSQLDATABASE || "laravel",
   PORT: process.env.MYSQLPORT || 3306
 };
+
